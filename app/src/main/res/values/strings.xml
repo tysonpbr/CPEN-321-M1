@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CPEN_321_M1</string>
+    <string name="button_favorite_city">My Favorite City</string>
+    <string name="button_phone_details">Phone Details</string>
+    <string name="button_login_server">Login + Server Info</string>
+    <string name="button_surprise">Surprise</string>
+    <string name="title_activity_favorite_city">FavoriteCityActivity</string>
+</resources>
