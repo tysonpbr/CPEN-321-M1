@@ -43,10 +43,13 @@ public class FavoriteCityActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        //enable zoom controls
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+
         // Add a marker in Kona and move the camera
-        LatLng kona = new LatLng(20, -156);
+        LatLng kona = new LatLng(19.6419, -155.9962);
         mMap.addMarker(new MarkerOptions().position(kona).title("Marker in Kona"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(kona));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(3));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
     }
 }
