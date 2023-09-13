@@ -10,7 +10,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         buttonPhoneDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkLocationPermissions();
-
-                Log.d(TAG, "Trying to request location permissions");
-                Toast.makeText(MainActivity.this, "Trying to request location permissions", Toast.LENGTH_LONG).show();
+                if (checkLocationPermissions()) {
+                    Intent favoriteCityIntent = new Intent(MainActivity.this, PhoneDetailsActivity.class);
+                    startActivity(favoriteCityIntent);
+                }
             }
         });
 
@@ -40,19 +39,27 @@ public class MainActivity extends AppCompatActivity {
         buttonFavoriteCity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Trying to open maps", Toast.LENGTH_LONG).show();
-
                 Intent favoriteCityIntent = new Intent(MainActivity.this, FavoriteCityActivity.class);
                 startActivity(favoriteCityIntent);
             }
         });
     }
 
-    private void checkLocationPermissions() {
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResult) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResult);
+
+        if (grantResult.length > 0 && grantResult[0] == PackageManager.PERMISSION_GRANTED && requestCode == 1) {
+
+            Intent favoriteCityIntent = new Intent(MainActivity.this, PhoneDetailsActivity.class);
+            startActivity(favoriteCityIntent);
+        }
+    }
+
+    private boolean checkLocationPermissions() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
             && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "We got permissions", Toast.LENGTH_LONG).show();
-            return;
+            return true;
         }
         else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -80,5 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},1);
             }
         }
+
+        return false;
     }
 }
