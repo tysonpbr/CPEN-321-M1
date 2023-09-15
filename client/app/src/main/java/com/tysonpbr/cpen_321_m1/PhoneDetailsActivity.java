@@ -30,6 +30,9 @@ public class PhoneDetailsActivity extends AppCompatActivity implements LocationL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_details);
 
+        currentCityText = findViewById(R.id.text_current_city);
+        currentCityText.setText("Current City:");
+
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
@@ -37,7 +40,6 @@ public class PhoneDetailsActivity extends AppCompatActivity implements LocationL
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, this);
 
         } else {
-            currentCityText = findViewById(R.id.text_current_city);
             currentCityText.setText("Current City: \n ERROR: No Location Permissions");
         }
 

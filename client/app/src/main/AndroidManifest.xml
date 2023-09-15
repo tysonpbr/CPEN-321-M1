@@ -16,6 +16,9 @@
         android:theme="@style/Theme.CPEN_321_M1"
         tools:targetApi="31">
         <activity
+            android:name=".LoginServerActivity"
+            android:exported="false" />
+        <activity
             android:name=".PhoneDetailsActivity"
             android:exported="false" />
         <!--
@@ -31,7 +34,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBFeg0LPAL3g1xnE2WFtzQnLSn4I6LOuQY" />
+            android:value="AIzaSyC6zh-SDfnUsIo8uzBq2hLDnuPB4QtFjJw" />
 
         <activity
             android:name=".FavoriteCityActivity"

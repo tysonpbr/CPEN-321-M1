@@ -14,9 +14,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+
 public class MainActivity extends AppCompatActivity {
     private Button buttonPhoneDetails;
     private Button buttonFavoriteCity;
+    private Button buttonLoginServer;
+    private Button buttonSurprise;
     final static String TAG = "MainActivity";
 
     @Override
@@ -29,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (checkLocationPermissions()) {
-                    Intent favoriteCityIntent = new Intent(MainActivity.this, PhoneDetailsActivity.class);
-                    startActivity(favoriteCityIntent);
+                    Intent phoneDetailsIntent = new Intent(MainActivity.this, PhoneDetailsActivity.class);
+                    startActivity(phoneDetailsIntent);
                 }
             }
         });
@@ -41,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent favoriteCityIntent = new Intent(MainActivity.this, FavoriteCityActivity.class);
                 startActivity(favoriteCityIntent);
+            }
+        });
+
+        buttonLoginServer = findViewById(R.id.button_login_server);
+        buttonLoginServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent loginServerIntent = new Intent(MainActivity.this, LoginServerActivity.class);
+                startActivity(loginServerIntent);
             }
         });
     }
