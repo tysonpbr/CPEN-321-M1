@@ -15,8 +15,18 @@ app.get('/ipAddress', (req,res) => {
   res.send("Hello World");
 });
 
-app.get('/localTime', (req,res) => {
-  res.send("Hello World");
+app.get('/time', (req,res) => {
+  var currentTime = new Date();
+
+  var hours = currentTime.getHours();
+  var minutes = currentTime.getMinutes();
+  var seconds = currentTime.getSeconds();
+
+  hours = (hours < 10 ? "0" : "") + hours;
+  minutes = (minutes < 10 ? "0" : "") + minutes;
+  seconds = (seconds < 10 ? "0" : "") + seconds;
+
+  res.send(hours + ":" + minutes + ":" + seconds);
 });
 
 app.get('/name', (req,res) => {
