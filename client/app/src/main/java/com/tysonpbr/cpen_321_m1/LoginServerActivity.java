@@ -1,9 +1,14 @@
 package com.tysonpbr.cpen_321_m1;
 
+import static java.security.AccessController.getContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.text.format.Formatter;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -79,8 +84,6 @@ public class LoginServerActivity extends AppCompatActivity {
                 try (ResponseBody responseBody = response.body()) {
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-
-
                     String time = responseBody.string();
 
                     serverTimeText = findViewById(R.id.text_time_server);
@@ -89,11 +92,32 @@ public class LoginServerActivity extends AppCompatActivity {
             }
         });
 
-        serverIPText = findViewById(R.id.text_IP_server);
-//        serverIPText.setText("Current City:");
+        Request requestIP = new Request.Builder()
+                .url("http://10.0.2.2:8081/ipAddress")
+                .build();
+
+        client.newCall(requestIP).enqueue(new Callback() {
+            @Override public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    String IP_address = responseBody.string();
+
+                    serverIPText = findViewById(R.id.text_IP_server);
+                    serverIPText.setText("Server IP Address: \n" + IP_address);
+                }
+            }
+        });
+
+        WifiManager wm = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
 
         clientIPText = findViewById(R.id.text_IP_client);
-//        clientIPText.setText("Current City:");
+        clientIPText.setText("Client IP Address: \n" + ip);
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             LocalTime time = LocalTime.now();

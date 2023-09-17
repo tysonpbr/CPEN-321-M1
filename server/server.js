@@ -7,12 +7,18 @@ const client = new MongoClient(uri);
 
 app.use(express.json());
 
+var server = app.listen(8081, (req,res) => {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log("Serving is running on http://%s:%s", host, port);
+})
+
 app.get('/', (req,res) => {
   res.send("Hello World");
 });
 
 app.get('/ipAddress', (req,res) => {
-  res.send("Hello World");
+  res.send(server.address().address);
 });
 
 app.get('/time', (req,res) => {
@@ -32,12 +38,6 @@ app.get('/time', (req,res) => {
 app.get('/name', (req,res) => {
   res.send("Tyson Brown");
 });
-
-var server = app.listen(8081, (req,res) => {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log("Serving is running on http://%s:%s", host, port);
-})
 
 // async function run() {
 //   try {
