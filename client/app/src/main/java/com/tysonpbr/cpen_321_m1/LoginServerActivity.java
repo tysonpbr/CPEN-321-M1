@@ -51,7 +51,7 @@ public class LoginServerActivity extends AppCompatActivity {
         final OkHttpClient client = new OkHttpClient();
 
         Request requestName = new Request.Builder()
-                .url("http://10.0.2.2:8081/name")
+                .url("http://20.172.9.70:8081/name")
                 .build();
 
         client.newCall(requestName).enqueue(new Callback() {
@@ -72,7 +72,7 @@ public class LoginServerActivity extends AppCompatActivity {
         });
 
         Request requestTime = new Request.Builder()
-                .url("http://10.0.2.2:8081/time")
+                .url("http://20.172.9.70:8081/time")
                 .build();
 
         client.newCall(requestTime).enqueue(new Callback() {
@@ -93,7 +93,7 @@ public class LoginServerActivity extends AppCompatActivity {
         });
 
         Request requestIP = new Request.Builder()
-                .url("http://10.0.2.2:8081/ipAddress")
+                .url("http://20.172.9.70:8081/ipAddress")
                 .build();
 
         client.newCall(requestIP).enqueue(new Callback() {

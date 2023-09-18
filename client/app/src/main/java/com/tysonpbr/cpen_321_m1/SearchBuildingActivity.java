@@ -53,7 +53,7 @@ public class SearchBuildingActivity extends AppCompatActivity {
                 MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                 RequestBody body = RequestBody.create(JSON, jsonObject.toString());
                 Request requestName = new Request.Builder()
-                        .url("http://10.0.2.2:8081/allBuildings")
+                        .url("http://20.172.9.70:8081/allBuildings")
                         .post(body)
                         .build();
 
