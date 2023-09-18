@@ -8,6 +8,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tysonpbr.cpen_321_m1.databinding.ActivityFavoriteCityBinding;
@@ -43,13 +44,19 @@ public class FavoriteCityActivity extends FragmentActivity implements OnMapReady
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        //enable zoom controls
         mMap.getUiSettings().setZoomControlsEnabled(true);
 
-        // Add a marker in Kona and move the camera
         LatLng kona = new LatLng(19.6419, -155.9962);
+
         mMap.addMarker(new MarkerOptions().position(kona).title("Marker in Kona"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(kona));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
+
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target(kona)
+                .zoom(16)
+                .bearing(0)
+                .tilt(0)
+                .build();
+
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 }

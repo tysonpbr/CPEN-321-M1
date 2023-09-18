@@ -3,6 +3,8 @@ package com.tysonpbr.cpen_321_m1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,10 +14,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -78,9 +83,21 @@ public class SearchBuildingActivity extends AppCompatActivity {
                                     }
                                 });
                             } else {
+                                List<Address> addressList = null;
+
+                                Geocoder geocoder = new Geocoder(SearchBuildingActivity.this);
+                                try {
+                                    addressList = geocoder.getFromLocationName(address + " Vancouver", 1);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+
+                                Address _address = addressList.get(0);
+
                                 Intent mapsIntent = new Intent(SearchBuildingActivity.this, ShowRouteActivity.class);
                                 Bundle b = new Bundle();
-                                b.putString("address", address); //Your id
+                                b.putDouble("lat", _address.getLatitude());
+                                b.putDouble("lng", _address.getLongitude());
                                 mapsIntent.putExtras(b);
                                 startActivity(mapsIntent);
                             }

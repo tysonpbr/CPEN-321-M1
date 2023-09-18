@@ -19,6 +19,8 @@
     <string name="text_building_code_placeholder">Building Code</string>
     <string name="text_prompt">Enter a UBC Building Code</string>
 
+    <string name="map_id">3efb1820fed281ff</string>
+
     <string name="title_activity_show_route">ShowRouteActivity</string>
 
 </resources>

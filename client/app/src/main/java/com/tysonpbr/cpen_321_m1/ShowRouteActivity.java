@@ -19,6 +19,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.tysonpbr.cpen_321_m1.databinding.ActivityShowRouteBinding;
@@ -59,35 +60,32 @@ public class ShowRouteActivity extends FragmentActivity implements OnMapReadyCal
         mMap = googleMap;
 
         Bundle b = getIntent().getExtras();
-        String address = "";
+        Double lat = 0.0;
+        Double lng = 0.0;
+
         if (b != null)
-            address = b.getString("address");
+            lat = b.getDouble("lat");
+            lng = b.getDouble("lng");
 
-        List<Address> addressList = null;
+        latLng = new LatLng(lat, lng);
 
-        Geocoder geocoder = new Geocoder(ShowRouteActivity.this);
-        try {
-            // on below line we are getting location from the
-            // location name and adding that location to address list.
-            addressList = geocoder.getFromLocationName(address + " Vancouver", 1);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        CameraPosition cameraPosition = CameraPosition.builder()
+                .target(latLng)
+                .zoom(16)
+                .bearing(0)
+                .tilt(0)
+                .build();
 
-        Address _address = addressList.get(0);
-        latLng = new LatLng(_address.getLatitude(), _address.getLongitude());
-
-        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         mMap.addMarker(new MarkerOptions().position(latLng).title(""));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
         if (checkLocationPermissions()) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
             mMap.setMyLocationEnabled(true);
         }
+        mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
     private boolean checkLocationPermissions() {
@@ -104,6 +102,9 @@ public class ShowRouteActivity extends FragmentActivity implements OnMapReadyCal
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResult) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResult);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(16));
 
         if (grantResult.length > 0 && grantResult[0] == PackageManager.PERMISSION_GRANTED && requestCode == 1) {
 
