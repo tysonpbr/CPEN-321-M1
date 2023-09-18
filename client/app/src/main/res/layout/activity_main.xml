@@ -33,10 +33,10 @@
         app:layout_constraintVertical_bias="0.6" />
 
     <Button
-        android:id="@+id/button_surprise"
+        android:id="@+id/button_search_building"
         android:layout_width="300dp"
         android:layout_height="100dp"
-        android:text="@string/button_surprise"
+        android:text="@string/button_search_building"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

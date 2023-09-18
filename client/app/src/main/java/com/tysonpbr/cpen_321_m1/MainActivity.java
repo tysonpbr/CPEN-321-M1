@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonPhoneDetails;
     private Button buttonFavoriteCity;
     private Button buttonLoginServer;
-    private Button buttonSurprise;
+    private Button buttonSearchBuilding;
+
     final static String TAG = "MainActivity";
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -67,6 +68,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+
+        buttonSearchBuilding = findViewById(R.id.button_search_building);
+        buttonSearchBuilding.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent searchBuildingIntent = new Intent(MainActivity.this, SearchBuildingActivity.class);
+                startActivity(searchBuildingIntent);
             }
         });
     }
